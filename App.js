@@ -1,8 +1,17 @@
 import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Button, TextInput } from "react-native";
+import { StyleSheet, Text, View, Button, TextInput, FlatList, ScrollView } from "react-native";
 
 export default function App() {
+  const [people, setPeople] = useState([
+    { name: 'shaun', id: '1' },
+    { name: 'yoshi', id: '2' },
+    { name: 'mario', id: '3' },
+    { name: 'luigi', id: '4' },
+    { name: 'peach', id: '5' },
+    { name: 'toad', id: '6' },
+    { name: 'bowser', id: '7' },
+  ]);
   const [name, setName] = useState("ramzi");
   const [age, setAge] = useState(13);
 
@@ -16,7 +25,8 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
+      <ScrollView>
+       <View style={styles.header}>
         <Text style={styles.headerText}>Hello World!</Text>
       </View>
       <View style={styles.body}>
@@ -39,7 +49,28 @@ export default function App() {
         placeholder='Enter age'
         onChangeText={(newAge)=>setAge(newAge)}
         />
-      </View>
+      </View> 
+      <ScrollView>
+        {
+          people.map(item => {
+            return (
+              <View key={item.id}>
+                <Text style={styles.item} >{item.name}</Text>
+              </View>
+              );
+          })
+        }
+      </ScrollView>
+      <FlatList 
+      style = {styles.list}
+        numColumns={2}
+        keyExtractor={(item) => item.id} 
+        data={people} 
+        renderItem={({ item }) => ( 
+          <Text style={styles.item}>{item.name}</Text>
+        )}
+      /> 
+      </ScrollView>
     </View>
   );
 }
@@ -48,8 +79,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "grey",
-    alignItems: "center",
+    // alignItems: "center",
     justifyContent: "center",
+    paddingTop: 40,
+    paddingHorizontal: 20,
   },
   header: {
     backgroundColor: "yellow",
@@ -75,5 +108,16 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     margin: 10,
     width: 200,
+  },
+  list:{
+    marginTop:10,
+  },
+  item: {
+    flex: 1,
+    marginHorizontal: 10,
+    marginTop: 24,
+    padding: 30,
+    backgroundColor: 'pink',
+    fontSize: 24,
   },
 });
