@@ -1,16 +1,24 @@
-import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Button, TextInput, FlatList, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TextInput,
+  FlatList,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 
 export default function App() {
   const [people, setPeople] = useState([
-    { name: 'shaun', id: '1' },
-    { name: 'yoshi', id: '2' },
-    { name: 'mario', id: '3' },
-    { name: 'luigi', id: '4' },
-    { name: 'peach', id: '5' },
-    { name: 'toad', id: '6' },
-    { name: 'bowser', id: '7' },
+    { name: "shaun", id: "1" },
+    { name: "yoshi", id: "2" },
+    { name: "mario", id: "3" },
+    { name: "luigi", id: "4" },
+    { name: "peach", id: "5" },
+    { name: "toad", id: "6" },
+    { name: "bowser", id: "7" },
   ]);
   const [name, setName] = useState("ramzi");
   const [age, setAge] = useState(13);
@@ -23,10 +31,17 @@ export default function App() {
   //   }
   // };
 
+  const pressHandler = (id) => {
+    console.log(id);
+    //> takes the list, and rturn a new array without returning the item that is pressed according to its id 
+    setPeople((prevPeople) => {
+      return prevPeople.filter(person => person.id  != id);
+    });
+  };
+
   return (
     <View style={styles.container}>
-      <ScrollView>
-       <View style={styles.header}>
+      <View style={styles.header}>
         <Text style={styles.headerText}>Hello World!</Text>
       </View>
       <View style={styles.body}>
@@ -38,39 +53,42 @@ export default function App() {
         {/* <View style={styles.buttonContainer}>
           <Button title="update" onPress={clickHandler} />
         </View> */}
-        <TextInput 
-        style={styles.textInput} 
-        placeholder='Enter name'
-        onChangeText={(newName)=>setName(newName)}
+        <TextInput
+          style={styles.textInput}
+          placeholder="Enter name"
+          onChangeText={(newName) => setName(newName)}
         />
-        <TextInput 
-        keyboardType="numeric"
-        style={styles.textInput} 
-        placeholder='Enter age'
-        onChangeText={(newAge)=>setAge(newAge)}
+        <TextInput
+          keyboardType="numeric"
+          style={styles.textInput}
+          placeholder="Enter age"
+          onChangeText={(newAge) => setAge(newAge)}
         />
-      </View> 
+      </View>
       <ScrollView>
-        {
-          people.map(item => {
-            return (
-              <View key={item.id}>
-                <Text style={styles.item} >{item.name}</Text>
-              </View>
-              );
-          })
-        }
+        {people.map((item) => {
+          return (
+            <View key={item.id}>
+              <Text style={styles.item}>{item.name}</Text>
+            </View>
+          );
+        })}
       </ScrollView>
+
       <FlatList 
-      style = {styles.list}
         numColumns={2}
         keyExtractor={(item) => item.id} 
         data={people} 
-        renderItem={({ item }) => ( 
-          <Text style={styles.item}>{item.name}</Text>
+        renderItem={({ item }) => (
+          <TouchableOpacity 
+            onPress={() => pressHandler(item.id)}
+            style={styles.touchable}>
+              
+            <Text style={styles.item}>{item.name}</Text>
+          </TouchableOpacity>
         )}
-      /> 
-      </ScrollView>
+      />
+
     </View>
   );
 }
@@ -109,15 +127,21 @@ const styles = StyleSheet.create({
     margin: 10,
     width: 200,
   },
-  list:{
-    marginTop:10,
+  list: {
+    marginTop: 10,
   },
   item: {
     flex: 1,
     marginHorizontal: 10,
     marginTop: 24,
     padding: 30,
-    backgroundColor: 'pink',
+    backgroundColor: "pink",
+
     fontSize: 24,
+  },
+  touchable: {
+    borderColor: "black",
+    borderStyle: "solid",
+    borderWidth: 4,
   },
 });
