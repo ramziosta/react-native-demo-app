@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import Header from "./components/Header";
+import TodoItem from './components/TodoItem';
+import Form from './components/Form'
 import {
   StyleSheet,
   Text,
@@ -7,88 +10,48 @@ import {
   TextInput,
   FlatList,
   ScrollView,
-  TouchableOpacity,
+  TouchableOpacity, Alert
 } from "react-native";
 
 export default function App() {
-  const [people, setPeople] = useState([
-    { name: "shaun", id: "1" },
-    { name: "yoshi", id: "2" },
-    { name: "mario", id: "3" },
-    { name: "luigi", id: "4" },
-    { name: "peach", id: "5" },
-    { name: "toad", id: "6" },
-    { name: "bowser", id: "7" },
+  const [todos, setTodos] = useState([
+    { text: "buy decaf coffee", key: "1" },
+    { text: "create an apps", key: "2" },
+    { text: "practice bass", key: "3" },
   ]);
-  const [name, setName] = useState("ramzi");
-  const [age, setAge] = useState(13);
-
-  // const clickHandler = () => {
-  //   if (name === "ramzi") {
-  //     setName("Mojo Jojo");
-  //   } else {
-  //     setName("ramzi");
-  //   }
-  // };
-
-  const pressHandler = (id) => {
-    console.log(id);
-    //> takes the list, and rturn a new array without returning the item that is pressed according to its id 
-    setPeople((prevPeople) => {
-      return prevPeople.filter(person => person.id  != id);
+const [key, setKey] = useState(4)
+  const pressHandler =(key) => {
+    setTodos((prevTodos) => { 
+    return prevTodos.filter(todo => todo.key !=key);
     });
-  };
+  }
+ 
+  const handleAdd =(text) => {
+    setKey(key+1);
+    if(text.length > 3){
+      setTodos((prevTodos) => { 
+        return [...prevTodos, {text: text, key: key}];
+        });
+    }else{
+    //   Alert.alert("must be over 3 char longs","Please enter more info",[{ text: "ok!", onPress: () => console.log('alert closed')}
+    // ]);
+    alert("must be over 3 char longs");
+    }
+    
+  }
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Hello World!</Text>
+      <Header />
+      <View style={styles.content}>
+        <Form handleAdd={handleAdd} />
+        <View style={styles.list}>
+          <FlatList
+            data={todos}
+            renderItem={({ item }) => <TodoItem item={item} pressHandler={pressHandler} />}
+          />
+        </View>
       </View>
-      <View style={styles.body}>
-        <Text style={styles.bodyText}>My name is {name}</Text>
-        <Text style={styles.bodyText}>
-          {name} is {age} years old!
-        </Text>
-        <Text style={styles.bodyText}>{age}</Text>
-        {/* <View style={styles.buttonContainer}>
-          <Button title="update" onPress={clickHandler} />
-        </View> */}
-        <TextInput
-          style={styles.textInput}
-          placeholder="Enter name"
-          onChangeText={(newName) => setName(newName)}
-        />
-        <TextInput
-          keyboardType="numeric"
-          style={styles.textInput}
-          placeholder="Enter age"
-          onChangeText={(newAge) => setAge(newAge)}
-        />
-      </View>
-      <ScrollView>
-        {people.map((item) => {
-          return (
-            <View key={item.id}>
-              <Text style={styles.item}>{item.name}</Text>
-            </View>
-          );
-        })}
-      </ScrollView>
-
-      <FlatList 
-        numColumns={2}
-        keyExtractor={(item) => item.id} 
-        data={people} 
-        renderItem={({ item }) => (
-          <TouchableOpacity 
-            onPress={() => pressHandler(item.id)}
-            style={styles.touchable}>
-              
-            <Text style={styles.item}>{item.name}</Text>
-          </TouchableOpacity>
-        )}
-      />
-
     </View>
   );
 }
@@ -97,51 +60,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "grey",
-    // alignItems: "center",
-    justifyContent: "center",
-    paddingTop: 40,
-    paddingHorizontal: 20,
   },
-  header: {
-    backgroundColor: "yellow",
-    padding: 20,
-  },
-  headerText: {
-    fontSize: 32,
-  },
-  body: {
-    backgroundColor: "red",
-    padding: 6,
-  },
-  bodyText: {
-    fontWeight: "bold",
-  },
-  buttonContainer: {
-    marginTop: 30,
-    border: "solid 3px black",
-  },
-  textInput: {
-    borderWidth: 1,
-    borderColor: "white",
-    borderStyle: "solid",
-    margin: 10,
-    width: 200,
+  content: {
+    padding: 40,
   },
   list: {
-    marginTop: 10,
-  },
-  item: {
-    flex: 1,
-    marginHorizontal: 10,
-    marginTop: 24,
-    padding: 30,
-    backgroundColor: "pink",
-
-    fontSize: 24,
-  },
-  touchable: {
-    borderColor: "black",
-    borderStyle: "solid",
-    borderWidth: 4,
+    marginTop: 20,
   },
 });
