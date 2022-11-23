@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Header from "./components/Header";
-import TodoItem from './components/TodoItem';
-import Form from './components/Form'
+import TodoItem from "./components/TodoItem";
+import Form from "./components/Form";
+
 import {
   StyleSheet,
   Text,
@@ -10,7 +11,10 @@ import {
   TextInput,
   FlatList,
   ScrollView,
-  TouchableOpacity, Alert
+  TouchableOpacity,
+  Alert,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 
 export default function App() {
@@ -19,40 +23,46 @@ export default function App() {
     { text: "create an apps", key: "2" },
     { text: "practice bass", key: "3" },
   ]);
-const [key, setKey] = useState(4)
-  const pressHandler =(key) => {
-    setTodos((prevTodos) => { 
-    return prevTodos.filter(todo => todo.key !=key);
+
+  const [key, setKey] = useState(4);
+
+  const pressHandler = (key) => {
+    setTodos((prevTodos) => {
+      return prevTodos.filter((todo) => todo.key != key);
     });
-  }
- 
-  const handleAdd =(text) => {
-    setKey(key+1);
-    if(text.length > 3){
-      setTodos((prevTodos) => { 
-        return [...prevTodos, {text: text, key: key}];
-        });
-    }else{
-    //   Alert.alert("must be over 3 char longs","Please enter more info",[{ text: "ok!", onPress: () => console.log('alert closed')}
-    // ]);
-    alert("must be over 3 char longs");
+    console.log(key);
+  };
+
+  const handleAdd = (text) => {
+    setKey(key + 1);
+    if (text.length > 3) {
+      setTodos((prevTodos) => {
+        return [...prevTodos, { text: text, key: key }];
+      });
+    } else {
+      //   Alert.alert("must be over 3 char longs","Please enter more info",[{ text: "ok!", onPress: () => console.log('alert closed')}
+      // ]);
+      alert("must be over 3 char longs");
     }
-    
-  }
+  };
 
   return (
-    <View style={styles.container}>
-      <Header />
-      <View style={styles.content}>
-        <Form handleAdd={handleAdd} />
-        <View style={styles.list}>
-          <FlatList
-            data={todos}
-            renderItem={({ item }) => <TodoItem item={item} pressHandler={pressHandler} />}
-          />
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={styles.container}>
+        <Header />
+        <View style={styles.content}>
+          <Form handleAdd={handleAdd} />
+          <View style={styles.list}>
+            <FlatList
+              data={todos}
+              renderItem={({ item }) => (
+                <TodoItem item={item} pressHandler={pressHandler} />
+              )}
+            />
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -63,8 +73,11 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: 40,
+    flex: 1,
   },
   list: {
+    flex:1,
     marginTop: 20,
+   
   },
 });
