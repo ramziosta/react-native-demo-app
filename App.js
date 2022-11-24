@@ -4,6 +4,7 @@ import About from "./screens/About";
 import ReviewDetails from "./screens/ReviewDetails";
 import { StyleSheet, Text, Button, View } from "react-native";
 import { useFonts } from "expo-font";
+import Navigator from './routes/HomeStack';
 
 export default function App() {
 
@@ -15,12 +16,7 @@ export default function App() {
     return null;
   }
   return (
-    <View>
-      <Home />
-      <About />
-      <ReviewDetails />
-      
-    </View>
+   Navigator()
   );
 }
 
