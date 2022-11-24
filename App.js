@@ -6,8 +6,9 @@ import { StyleSheet, Text, Button, View } from "react-native";
 import { useFonts } from "expo-font";
 
 export default function App() {
+
   const [loaded] = useFonts({
-    "RubikDistressed-Regular": require("./assets/fonts/RubikDistressed-Regular.ttf"),
+    "DancingScript-Regular": require("./assets/fonts/DancingScript-Regular.ttf"),
   });
 
   if (!loaded) {
@@ -16,14 +17,11 @@ export default function App() {
   return (
     <View>
       <Home />
-      <Text style={styles.text}>hello world whats going on?</Text>
+      <About />
+      <ReviewDetails />
+      
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  text: {
-    fontFamily: "RubikDistressed-Regular",
-    fontSize: 40,
-  },
-});
+
