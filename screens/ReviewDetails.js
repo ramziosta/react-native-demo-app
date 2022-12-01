@@ -16,4 +16,4 @@ export default function ReviewDetails({navigation}) {
       <Button title={'Back To Home'} onPress={pressHandler}/>
     </View>
   );
-}
+} 

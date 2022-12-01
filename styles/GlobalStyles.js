@@ -5,14 +5,14 @@ export const globalStyles = StyleSheet.create({
         marginTop: 50,
         flex:1,
         padding: 20,
-       backgroundColor:'#333'
+       backgroundColor:'wheat'
     },
 
     texts:{
         marginTop: 50,
         padding: 40,
         fontSize: 32,
-       fontFamily: "DancingScript-Regular",
+       fontFamily: "Nunito-Black",
         color: 'red',
     },
     paragraph:{

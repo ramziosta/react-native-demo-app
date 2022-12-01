@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import { StyleSheet, Text, Button, View } from "react-native";
 import { globalStyles } from "../styles/GlobalStyles";
 
-export default function About({ route, navigation }) {
+export default function Contact({ route, navigation }) {
   const pressHandler = () => {
-    navigation.navigate("Contact");
-    //navigation.goBack();
+    //navigation.navigate("ReviewDetails");
+    navigation.goBack();
   };
   return (
     <View>
-      <Text style={globalStyles.texts}>About</Text>
+      <Text style={globalStyles.texts}>Contact</Text>
       <Text style={globalStyles.paragraph}>Lorem Ipsum dolor something </Text>
-      <Button title={"Contact"} onPress={pressHandler} />
+      <Button title={"Back To About"} onPress={pressHandler} />
     </View>
   );
 }

@@ -2,19 +2,34 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Home from "../screens/Home";
-import About from "../screens/About";
 import ReviewDetails from "../screens/ReviewDetails";
 
 const Stack = createStackNavigator();
 
-export default function Navigator() {
+export default function HomeStack() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="About" component={About} />
-        <Stack.Screen name="ReviewDetails" component={ReviewDetails} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Stack.Navigator
+      // default props for header go here
+      intialRouteName="Home page"
+      screenOptions={{ headerStyle: { backgroundColor: "red" } }}
+    >
+      <Stack.Screen
+        // override props for a specific header go here
+        name="Home"
+        component={Home}
+        options={{
+          title: "Home page title",
+          headerStyle: { backgroundColor: "green" },
+        }}
+      />
+      <Stack.Screen
+        name="ReviewDetails"
+        component={ReviewDetails}
+        options={{
+          title: "Review Details",
+          headerStyle: { backgroundColor: "yellow" },
+        }}
+      />
+    </Stack.Navigator>
   );
 }
