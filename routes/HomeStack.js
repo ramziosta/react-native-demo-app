@@ -19,19 +19,56 @@ export default function HomeStack() {
         // override props for a specific header go here
         name="Home"
         component={Home}
-        options={{
+        screenOptions={{
           title: "Home page title",
-          headerStyle: { backgroundColor: "green" },
+          headerStyle: { backgroundColor: "green" }, headerShown: false,
         }}
       />
       <Stack.Screen
         name="ReviewDetails"
         component={ReviewDetails}
-        options={{
+        screenOptions={{
           title: "Review Details",
-          headerStyle: { backgroundColor: "yellow" },
+          headerStyle: { backgroundColor: "yellow" }, headerShown: false,
         }}
       />
     </Stack.Navigator>
   );
 }
+
+
+/*
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import Home from '../screens/home';
+import ReviewDetails from '../screens/reviewDetails';
+
+const Stack = createNativeStackNavigator();
+
+export default function Navigator() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Group
+          screenOptions={{ headerStyle: { backgroundColor: 'papayawhip' } }}>
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{
+              title: 'GameZone',
+            }}
+          />
+          <Stack.Screen
+            name="ReviewDetails"
+            component={ReviewDetails}
+            options={{
+              title: 'Review Details',
+            }}
+          />
+        </Stack.Group>
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+*/

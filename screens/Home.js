@@ -1,10 +1,9 @@
-import React, { useState, } from "react";
+import React, { useState } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import { globalStyles } from "../styles/GlobalStyles";
 import { FlatList } from "react-native-gesture-handler";
-
+import Card from "../components/Card";
 export default function Home({ navigation }) {
-
   const [reviews, setReviews] = useState([
     {
       title: "List Item one",
@@ -19,7 +18,7 @@ export default function Home({ navigation }) {
       key: "2",
     },
     {
-      title: 'List Item three',
+      title: "List Item three",
       rating: 3,
       body: "lorem ipsum",
       key: "3",
@@ -35,11 +34,12 @@ export default function Home({ navigation }) {
           <TouchableOpacity
             onPress={() => navigation.navigate("ReviewDetails", item)}
           >
-            <Text style={globalStyles.texts}>{item.title}</Text>
+            <Card>
+              <Text style={globalStyles.texts}>{item.title}</Text>
+            </Card>
           </TouchableOpacity>
         )}
       />
-  
     </View>
   );
 }
