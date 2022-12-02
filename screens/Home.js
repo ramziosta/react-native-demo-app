@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import { Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity , Modal} from "react-native";
 import { globalStyles } from "../styles/GlobalStyles";
 import { FlatList } from "react-native-gesture-handler";
 import Card from "../components/Card";
+import { MaterialIcons } from '@expo/vector-icons';
+
+
 export default function Home({ navigation }) {
   const [reviews, setReviews] = useState([
     {
@@ -24,9 +27,28 @@ export default function Home({ navigation }) {
       key: "3",
     },
   ]);
-
+const [modalOpen, setModalOpen]= React.useState(false)
   return (
     <View style={globalStyles.container}>
+      <Modal visible={modalOpen} >
+        <View style={styles.modalContent}>
+        <MaterialIcons 
+            name='close'
+            size={24} 
+            style={[styles.modalToggle, styles.modalClose]}
+            onPress={() => setModalOpen(false)} 
+          />
+          <Text style={{ fontSize: 20, color: "black" }}>
+            Welcome to React Native!
+          </Text>
+        </View>
+      </Modal>
+      <MaterialIcons 
+        name='add' 
+        size={24} 
+        style={styles.modalToggle}
+        onPress={() => setModalOpen(true)} 
+      />
       <Text style={globalStyles.texts}>Home Page</Text>
       <FlatList
         data={reviews}
@@ -43,3 +65,27 @@ export default function Home({ navigation }) {
     </View>
   );
 }
+
+const styles= StyleSheet.create({
+  modalToggle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10,
+    borderWidth: 1,
+  
+    padding: 10,
+    borderRadius: 10,
+    alignSelf: 'center',
+  },
+  modalClose: {
+    marginTop: 20,
+    marginBottom: 0,
+  },
+  modalContent: {
+
+    backgroundColor: 'red',
+    top:100,
+    height:400,
+
+  }
+})

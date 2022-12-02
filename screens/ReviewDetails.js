@@ -32,6 +32,11 @@ export default function ReviewDetails({ route, navigation }) {
 
 const styles = StyleSheet.create({
   rating: {
-    flexDirection: "row",
-  },
+    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingTop: 16,
+    marginTop: 16,
+    borderTopWidth: 1,
+    borderTopColor: '#eee',
+  }
 });
