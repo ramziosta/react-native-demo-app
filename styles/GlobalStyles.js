@@ -23,4 +23,21 @@ export const globalStyles = StyleSheet.create({
     marginVertical: 8,
     lineHeight: 18,
   },
+  lableText:{
+
+  },
+  input:{
+    borderColor: 'black',
+    borderWidth: 1,
+    color: 'black',
+    height: 40,
+    borderRadius:4,
+  },
+  formField:{
+    marginVertical: 8
+  },
+  button:{},
+  container2: {
+    flex: 1,
+  },
 });

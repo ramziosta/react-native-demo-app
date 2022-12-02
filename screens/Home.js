@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity , Modal} from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Modal } from "react-native";
 import { globalStyles } from "../styles/GlobalStyles";
 import { FlatList } from "react-native-gesture-handler";
 import Card from "../components/Card";
-import { MaterialIcons } from '@expo/vector-icons';
-
+import { MaterialIcons } from "@expo/vector-icons";
+import Form from "./Form";
 
 export default function Home({ navigation }) {
   const [reviews, setReviews] = useState([
@@ -27,27 +27,37 @@ export default function Home({ navigation }) {
       key: "3",
     },
   ]);
-const [modalOpen, setModalOpen]= React.useState(false)
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const [listKey, setListKey] = useState(5);
+
+  const addReview = (review) => {
+    review.key = listKey.toString();
+    setReviews((currentReviews) => {
+      return [review, ...currentReviews];
+    });
+    setModalOpen(false);
+    setListKey(listKey + 1);
+  };
+
   return (
     <View style={globalStyles.container}>
-      <Modal visible={modalOpen} >
+      <Modal visible={modalOpen}>
         <View style={styles.modalContent}>
-        <MaterialIcons 
-            name='close'
-            size={24} 
+          <MaterialIcons
+            name="close"
+            size={24}
             style={[styles.modalToggle, styles.modalClose]}
-            onPress={() => setModalOpen(false)} 
+            onPress={() => setModalOpen(false)}
           />
-          <Text style={{ fontSize: 20, color: "black" }}>
-            Welcome to React Native!
-          </Text>
+          <Form addReview={addReview} />
         </View>
       </Modal>
-      <MaterialIcons 
-        name='add' 
-        size={24} 
+      <MaterialIcons
+        name="add"
+        size={24}
         style={styles.modalToggle}
-        onPress={() => setModalOpen(true)} 
+        onPress={() => setModalOpen(true)}
       />
       <Text style={globalStyles.texts}>Home Page</Text>
       <FlatList
@@ -66,26 +76,24 @@ const [modalOpen, setModalOpen]= React.useState(false)
   );
 }
 
-const styles= StyleSheet.create({
+const styles = StyleSheet.create({
   modalToggle: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginBottom: 10,
     borderWidth: 1,
-  
+
     padding: 10,
     borderRadius: 10,
-    alignSelf: 'center',
+    alignSelf: "center",
   },
   modalClose: {
     marginTop: 20,
     marginBottom: 0,
   },
   modalContent: {
-
-    backgroundColor: 'red',
-    top:100,
-    height:400,
-
-  }
-})
+    backgroundColor: "red",
+    top: 100,
+    height: 400,
+  },
+});
