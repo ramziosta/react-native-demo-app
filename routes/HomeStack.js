@@ -1,5 +1,4 @@
 import React from "react";
-
 import { createStackNavigator } from "@react-navigation/stack";
 import Home from "../screens/Home";
 import ReviewDetails from "../screens/ReviewDetails";
@@ -11,7 +10,10 @@ export default function HomeStack() {
     <Stack.Navigator
       // default props for header go here
       intialRouteName="Home page"
-      screenOptions={{ headerStyle: { backgroundColor: "red" } }}
+      screenOptions={{
+        headerStyle: { backgroundColor: "red" },
+        headerShown: false,
+      }}
     >
       <Stack.Screen
         // override props for a specific header go here

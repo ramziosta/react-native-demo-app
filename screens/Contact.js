@@ -1,5 +1,5 @@
 import React from "react";
-import {  Text, Button, View } from "react-native";
+import { Text, Button, View } from "react-native";
 import { globalStyles } from "../styles/GlobalStyles";
 
 export default function Contact({ route, navigation }) {

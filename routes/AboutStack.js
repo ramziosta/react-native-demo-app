@@ -13,6 +13,7 @@ export default function AboutStacks() {
       screenOptions={{
         headerTitle: "About this thing",
         title: "About GameZone",
+        headerShown: false,
       }}
     >
       <AboutStack.Screen name="About" component={About} />
