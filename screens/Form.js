@@ -10,19 +10,23 @@ import {
 } from "react-native";
 import { globalStyles } from "../styles/GlobalStyles";
 import { Formik } from "formik";
-import Button from '../components/Button.js';
+import Button from "../components/Button.js";
 import * as Yup from "yup";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../config";
 
 //yup
 const reviewSchema = Yup.object({
-title: Yup.string().required().min(4),
-body: Yup.string().required().min(8),
-rating: Yup.number().required().min(1).max(5).test('is-num-1-5','Rating must be a number 1- 5', (val)=> {
-  return parseInt(val) < 6 && parseInt(val) > 0
-})
-})
-
-
+  title: Yup.string().required().min(4),
+  body: Yup.string().required().min(8),
+  rating: Yup.number()
+    .required()
+    .min(1)
+    .max(5)
+    .test("is-num-1-5", "Rating must be a number 1- 5", (val) => {
+      return parseInt(val) < 6 && parseInt(val) > 0;
+    }),
+});
 
 const Form = ({ addReview }) => {
   return (
@@ -36,8 +40,10 @@ const Form = ({ addReview }) => {
             initialValues={{ title: "", body: "", rating: "" }}
             validationSchema={reviewSchema}
             onSubmit={(values, actions) => {
-              actions.resetForm();
+              addDoc(collection(db, "article"), values);
+              console.log(values);
               addReview(values);
+              actions.resetForm();
             }}
           >
             {(props) => (
@@ -48,23 +54,28 @@ const Form = ({ addReview }) => {
                     style={globalStyles.input}
                     placeholder="title"
                     onChangeText={props.handleChange("title")}
-                    onBlur={props.handleBlur('title')} 
+                    onBlur={props.handleBlur("title")}
                     value={props.values.title}
                   />
-                  <Text style={globalStyles.errorText}>{props.touched.title && props.errors.title}</Text>
+                  <Text style={globalStyles.errorText}>
+                    {props.touched.title && props.errors.title}
+                  </Text>
                 </View>
 
                 <View style={globalStyles.formField}>
                   <Text style={globalStyles.lableText}>Content:</Text>
                   <TextInput
                     style={globalStyles.input}
-                    multiline minHeight={60}
+                    multiline
+                    minHeight={60}
                     placeholder="body"
                     onChangeText={props.handleChange("body")}
-                    onBlur={props.handleBlur('body')} 
+                    onBlur={props.handleBlur("body")}
                     value={props.values.body}
                   />
-                  <Text style={globalStyles.errorText}>{props.touched.body && props.errors.body}</Text>
+                  <Text style={globalStyles.errorText}>
+                    {props.touched.body && props.errors.body}
+                  </Text>
                 </View>
 
                 <View style={globalStyles.formField}>
@@ -73,14 +84,16 @@ const Form = ({ addReview }) => {
                     style={globalStyles.input}
                     placeholder="rating"
                     onChangeText={props.handleChange("rating")}
-                    onBlur={props.handleBlur('rating')} 
+                    onBlur={props.handleBlur("rating")}
                     value={props.values.rating}
                     keyboardType="numeric"
                   />
-                  <Text style={globalStyles.errorText}>{props.touched.rating && props.errors.rating}</Text>
+                  <Text style={globalStyles.errorText}>
+                    {props.touched.rating && props.errors.rating}
+                  </Text>
                 </View>
-                <Button onPress={props.handleSubmit} buttonTitle='submit' />
-                  {/* 
+                <Button onPress={props.handleSubmit} buttonTitle="submit" />
+                {/* 
                 <Button
                   onPress={props.handleSubmit}
                   title="Submit"
