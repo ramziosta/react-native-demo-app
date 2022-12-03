@@ -17,7 +17,7 @@ export default function HomeStack() {
     >
       <Stack.Screen
         // override props for a specific header go here
-        name="Home"
+        name="Main"
         component={Home}
         screenOptions={{
           title: "Home page title",

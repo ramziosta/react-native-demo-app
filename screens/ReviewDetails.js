@@ -9,7 +9,7 @@ export default function ReviewDetails({ route, navigation }) {
   const rating = route.params.rating;
 
   const pressHandler = () => {
-    navigation.navigate("Home");
+    navigation.navigate("Main");
     //navigation.goBack();
   };
 
@@ -25,7 +25,7 @@ export default function ReviewDetails({ route, navigation }) {
           <Image source={Images.ratings[rating]} />
         </View>
       </Card>
-      <Button title={"Back To Home"} onPress={pressHandler} />
+      <Button title={"Back To Main"} onPress={pressHandler} />
     </View>
   );
 }

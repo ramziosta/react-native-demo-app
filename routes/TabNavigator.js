@@ -10,7 +10,7 @@ const Tab = createBottomTabNavigator();
 const TabNavigator = () => {
   return (
     <Tab.Navigator screenOptions={{headerBackground:()=> <ImageBackground source={require('../assets/game_bg.png')}  style={{width:"100%", height:"100%"}}/>}}>
-      <Tab.Screen name="Home" component={DrawerNav} />
+      <Tab.Screen name="Home Tab name" component={DrawerNav} />
       <Tab.Screen name="Account" component={Account} />
       <Tab.Screen name="Settings" component={Settings} />
     </Tab.Navigator>

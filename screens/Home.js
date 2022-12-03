@@ -69,7 +69,7 @@ export default function Home({ navigation }) {
         style={styles.modalToggle}
         onPress={() => setModalOpen(true)}
       />
-      <Text style={globalStyles.texts}>Home Page</Text>
+      <Text style={globalStyles.texts}>This is inside the Home.js</Text>
       <FlatList
         data={reviews}
         renderItem={({ item }) => (

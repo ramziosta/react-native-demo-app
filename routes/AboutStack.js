@@ -10,15 +10,15 @@ const AboutStacks = ({ navigation }) => {
   return (
     <AboutStack.Navigator
     initialRouteName="About"
-    headerMode="screen"
+    
     screenOptions={{
       headerTitle: "About this thing",
       title: "About GameZone",
-      headerShown: false,
+      headerShown: false, headerMode:"screen"
     }}
     >
       <AboutStack.Screen name="About" component={About}
-      option={{headerTitle:()=><Header navigation={navigation} title='About Reviewzzz' />}} />
+      />
       <AboutStack.Screen name="Contact" component={Contact} />
     </AboutStack.Navigator>
   );
