@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Modal } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Modal,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { globalStyles } from "../styles/GlobalStyles";
 import { FlatList } from "react-native-gesture-handler";
 import Card from "../components/Card";
@@ -42,17 +50,19 @@ export default function Home({ navigation }) {
 
   return (
     <View style={globalStyles.container}>
-      <Modal visible={modalOpen}>
-        <View style={styles.modalContent}>
-          <MaterialIcons
-            name="close"
-            size={24}
-            style={[styles.modalToggle, styles.modalClose]}
-            onPress={() => setModalOpen(false)}
-          />
-          <Form addReview={addReview} />
-        </View>
-      </Modal>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <Modal visible={modalOpen}>
+          <View style={styles.modalContent}>
+            <MaterialIcons
+              name="close"
+              size={24}
+              style={[styles.modalToggle, styles.modalClose]}
+              onPress={() => setModalOpen(false)}
+            />
+            <Form addReview={addReview} />
+          </View>
+        </Modal>
+      </TouchableWithoutFeedback>
       <MaterialIcons
         name="add"
         size={24}
