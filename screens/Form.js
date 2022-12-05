@@ -14,7 +14,7 @@ import Button from "../components/Button.js";
 import * as Yup from "yup";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../config";
-
+import { useState } from 'react';
 //yup
 const reviewSchema = Yup.object({
   title: Yup.string().required().min(4),
@@ -26,9 +26,11 @@ const reviewSchema = Yup.object({
     .test("is-num-1-5", "Rating must be a number 1- 5", (val) => {
       return parseInt(val) < 6 && parseInt(val) > 0;
     }),
+    key: Yup.number(),
 });
 
 const Form = ({ addReview }) => {
+  const [listKey, setListKey] = useState(88);
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -37,13 +39,19 @@ const Form = ({ addReview }) => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={globalStyles.container}>
           <Formik
-            initialValues={{ title: "", body: "", rating: "" }}
+            initialValues={{ title: "", body: "", rating: "" , key:""}}
             validationSchema={reviewSchema}
+  //!  ---------- submit function----------------- 
             onSubmit={(values, actions) => {
+             
+              // values.key = listKey.toString();
+
               addDoc(collection(db, "article"), values);
               console.log(values);
               addReview(values);
               actions.resetForm();
+              // setListKey(listKey + 1);
+              // console.log(listKey);
             }}
           >
             {(props) => (

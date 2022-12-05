@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -13,40 +13,46 @@ import { FlatList } from "react-native-gesture-handler";
 import Card from "../components/Card";
 import { MaterialIcons } from "@expo/vector-icons";
 import Form from "./Form";
+import { db } from "../config";
+import { collection, getDocs } from "firebase/firestore";
 
 export default function Home({ navigation }) {
-  const [reviews, setReviews] = useState([
-    {
-      title: "List Item one",
-      rating: 5,
-      body: "lorem ipsum",
-      key: "1",
-    },
-    {
-      title: "List Item two",
-      rating: 4,
-      body: "lorem ipsum",
-      key: "2",
-    },
-    {
-      title: "List Item three",
-      rating: 3,
-      body: "lorem ipsum",
-      key: "3",
-    },
-  ]);
+  const [Articles, setArticles] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
 
-  const [listKey, setListKey] = useState(5);
 
+  //> ------retrieve data from database----------
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "article"));
+        const Articles = [];
+        querySnapshot.forEach((doc) => {
+          Articles.push({ ...doc.data() });
+        });
+        setArticles(Articles);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  //< ---------send data to the database-------------
+
+  const [listKey, setListKey] = useState(5);
   const addReview = (review) => {
     review.key = listKey.toString();
-    setReviews((currentReviews) => {
+    setArticles((currentReviews) => {
       return [review, ...currentReviews];
+      setListKey(listKey + 1);
     });
     setModalOpen(false);
-    setListKey(listKey + 1);
+
+    console.log(listKey);
   };
+
 
   return (
     <View style={globalStyles.container}>
@@ -71,7 +77,7 @@ export default function Home({ navigation }) {
       />
       <Text style={globalStyles.texts}>This is inside the Home.js</Text>
       <FlatList
-        data={reviews}
+        data={Articles }
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => navigation.navigate("ReviewDetails", item)}
