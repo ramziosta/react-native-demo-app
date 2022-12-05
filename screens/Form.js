@@ -26,7 +26,7 @@ const reviewSchema = Yup.object({
     .test("is-num-1-5", "Rating must be a number 1- 5", (val) => {
       return parseInt(val) < 6 && parseInt(val) > 0;
     }),
-    key: Yup.number(),
+ 
 });
 
 const Form = ({ addReview }) => {
@@ -39,7 +39,7 @@ const Form = ({ addReview }) => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={globalStyles.container}>
           <Formik
-            initialValues={{ title: "", body: "", rating: "" , key:""}}
+            initialValues={{ title: "", body: "", rating: "" }}
             validationSchema={reviewSchema}
   //!  ---------- submit function----------------- 
             onSubmit={(values, actions) => {

@@ -46,10 +46,10 @@ export default function Home({ navigation }) {
     review.key = listKey.toString();
     setArticles((currentReviews) => {
       return [review, ...currentReviews];
-      setListKey(listKey + 1);
+    
     });
     setModalOpen(false);
-
+    setListKey(listKey + 1);
     console.log(listKey);
   };
 
