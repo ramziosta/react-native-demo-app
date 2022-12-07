@@ -7,6 +7,7 @@ import {
   Modal,
   Keyboard,
   TouchableWithoutFeedback,
+  Button,
 } from "react-native";
 import { globalStyles } from "../styles/GlobalStyles";
 import { FlatList } from "react-native-gesture-handler";
@@ -15,11 +16,26 @@ import { MaterialIcons } from "@expo/vector-icons";
 import Form from "./Form";
 import { db } from "../config";
 import { collection, getDocs } from "firebase/firestore";
+import { getAuth, signOut } from "firebase/auth";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Home({ navigation }) {
+  const auth = getAuth();
+  const nav = useNavigation();
+
   const [Articles, setArticles] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
 
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+        nav.navigate("SignIn");
+      })
+      .catch((error) => {
+        // An error happened.
+      });
+  };
 
   //> ------retrieve data from database----------
   useEffect(() => {
@@ -46,16 +62,15 @@ export default function Home({ navigation }) {
     review.key = listKey.toString();
     setArticles((currentReviews) => {
       return [review, ...currentReviews];
-    
     });
     setModalOpen(false);
     setListKey(listKey + 1);
     console.log(listKey);
   };
 
-
   return (
     <View style={globalStyles.container}>
+      <Button title="Logout" onPress={handleLogout} />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <Modal visible={modalOpen}>
           <View style={styles.modalContent}>
@@ -77,7 +92,7 @@ export default function Home({ navigation }) {
       />
       <Text style={globalStyles.texts}>This is inside the Home.js</Text>
       <FlatList
-        data={Articles }
+        data={Articles}
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => navigation.navigate("ReviewDetails", item)}

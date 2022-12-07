@@ -6,7 +6,7 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 const SignUpScreen = () => {
   const nav = useNavigation();
   const auth = getAuth();
-
+  const [user, setUser] = React.useState({})
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
@@ -15,11 +15,15 @@ const SignUpScreen = () => {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
+        console.log(user);
+        setUser(user);
+        nav.navigate("SignIn");
         // ...
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        alert(errorMessage);
         // ..
       });
       console.log(email);
